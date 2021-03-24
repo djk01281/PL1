@@ -12,6 +12,7 @@ void yyerror(char *);
 "-"	   {return SUB;}
 "/"	   {return DIV;}
 "*"	   {return MUL;}
+"exit" {return EXIT;}
 \n     { return EOL;}
 [ \t] ; /* skip whitespace */
 . yyerror("invalid character");

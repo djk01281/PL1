@@ -11,10 +11,11 @@ void yyerror(char *);
 %token LPR
 %token RPR
 %token EOL
+%token EXIT
 %%
 program:
 program addexpr EOL {printf("%d\n", $2);}
-|
+| EXIT {return;}
 ;
 addexpr:
 | addexpr ADD term {$$=$1+$3;}
@@ -36,6 +37,8 @@ void yyerror(char *s) {
 fprintf(stderr, "%s\n", s);
 }
 int main(int argc, char *argv){
+printf("type in 'exit' to exit");
+
 yyparse();
 return 0;
 }
