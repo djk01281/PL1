@@ -12,12 +12,12 @@ program addexpr '\n' {printf("%d\n", $2);}
 addexpr:
 | addexpr '+' term {$$=$1+$3;}
 | addexpr '-' term {$$=$1-$3;}
-| mulexpr {$$=$1;}
+| mulexpr 
 ;
 mulexpr:
 addexpr '*' term {$$=$1*$3;}
 |addexpr '/' term {$$=$1/$3;}
-| term {$$=$1;}
+| term 
 ;
 term:
 INTEGER {$$=$1;}
