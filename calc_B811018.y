@@ -15,7 +15,7 @@ void yyerror(char *);
 %%
 program:
 program addexpr EOL {printf("%d\n", $2);}
-| EXIT {return;}
+| EXIT {return 0;}
 ;
 addexpr:
 | addexpr ADD term {$$=$1+$3;}
