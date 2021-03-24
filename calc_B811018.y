@@ -13,11 +13,12 @@ void yyerror(char *);
 %token EOL
 %%
 program:
-program addexpr EOL {printf("%d\n", $2);}
+program addexpr EOL 
 |
 ;
 addexpr:
-addexpr ADD term {
+LPR addexpr RPR {$$=$2;}
+| addexpr ADD term {
     $$=$1+$3; 
     printf("%d + %d = %d -> ", $1, $3, $1+$3);
     }
@@ -39,8 +40,7 @@ addexpr MUL term {
 | term {$$=$1;}
 ;
 term:
-LPR addexpr RPR {$$=$2;}
-| INT {$$=$1;}
+INT {$$=$1;}
 ;
 %%
 void yyerror(char *s) {
