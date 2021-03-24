@@ -17,12 +17,12 @@ program addexpr EOL
 |
 ;
 addexpr:
-LPR addexpr RPR {$$=$2;}
-| addexpr ADD term {
+
+| addexpr ADD mulexpr {
     $$=$1+$3; 
     printf("%d + %d = %d -> ", $1, $3, $1+$3);
     }
-| addexpr SUB term {
+| addexpr SUB mulexpr {
     $$=$1-$3; 
     printf("%d - %d = %d -> ", $1, $3, $1-$3);
     }
@@ -33,14 +33,15 @@ addexpr MUL term {
     $$=$1*$3; 
     printf("%d * %d = %d -> ", $1, $3, $1*$3);
     }
-|addexpr DIV term {
+| addexpr DIV term {
     $$=$1/$3; 
     printf("%d / %d = %d -> ", $1, $3, $1/$3);
     }
 | term {$$=$1;}
 ;
 term:
-INT {$$=$1;}
+LPR addexpr RPR {$$=$2;}
+| INT {$$=$1;}
 ;
 %%
 void yyerror(char *s) {
