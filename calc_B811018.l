@@ -5,8 +5,13 @@
 void yyerror(char *);
 %}
 %%
-[0-9]+ { yylval=atoi(yytext); return INTEGER; }
-[-+\n] {return *yytext;}
+[0-9]+ { yylval=atoi(yytext); return INT; }
+"("		{return LPR;}
+")"		{return RPR;}
+"+"		{return ADD;}
+"-"		{return SUB;}
+"/"		{return DIV;}
+"*"		{return MUL;}
 [ \t] ; /* skip whitespace */
 . yyerror("invalid character");
 %%
