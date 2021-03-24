@@ -13,7 +13,7 @@ void yyerror(char *);
 %token EOL
 %%
 program:
-program expr EOL {printf("%d\n", $1);}
+program expr EOL {printf("%d\n", $2);}
 |
 ;
 expr:
