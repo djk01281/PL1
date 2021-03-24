@@ -11,11 +11,9 @@ void yyerror(char *);
 %token LPR
 %token RPR
 %token EOL
-%token EXIT
 %%
 program:
 program addexpr EOL {printf("%d\n", $2);}
-| EXIT {return 0;}
 ;
 addexpr:
 | addexpr ADD term {$$=$1+$3;}
@@ -28,8 +26,7 @@ addexpr MUL term {$$=$1*$3;}
 | term {$$=$1;}
 ;
 term:
-INT {$$=$1;}
-| LPR addexpr RPR {$$=$2;}
+LPR addexpr RPR {$$=$2;}
 | INT {$$=$1;}
 ;
 %%
@@ -37,7 +34,6 @@ void yyerror(char *s) {
 fprintf(stderr, "%s\n", s);
 }
 int main(int argc, char *argv){
-printf("type in 'exit' to exit\n");
 
 yyparse();
 return 0;
