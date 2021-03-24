@@ -19,22 +19,22 @@ program expr EOL {printf("%d\n", $2);}
 expr:
 expr ADD smexpr {
     $$=$1+$3; 
-    fprintf("%d + %d = %d\n", $s1, $s3, $s1 + $s3);
+    fprintf("%d + %d = %d\n", $1, $3, $1 + $3);
     }
 | expr SUB smexpr {
     $$=$1-$3; 
-    fprintf("%d - %d = %d\n", $s1, $s3, $s1 - $s3);
+    fprintf("%d - %d = %d\n", $1, $3, $1 - $3);
     }
 | smexpr {$$=$1;}
 ;
 smexpr:
 smexpr MUL term {
     $$=$1*$3; 
-    fprintf("%d * %d = %d\n", $s1, $s3, $s1 * $s3);
+    fprintf("%d * %d = %d\n", $1, $3, $1 * $3);
     }
 | smexpr DIV term {
     $$=$1/$3; 
-    fprintf("%d / %d = %d\n", $s1, $s3, $s1 / $s3);
+    fprintf("%d / %d = %d\n", $1, $3, $1 / $3);
     }
 | term {$$=$1;}
 ;
