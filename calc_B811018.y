@@ -18,7 +18,7 @@ program expr EOL {printf("%d\n", $1);}
 ;
 expr:
 smexpr {$$=$1;}
-expr ADD smexpr {
+| expr ADD smexpr {
     $$=$1+$3; 
     }
 | expr SUB smexpr {
