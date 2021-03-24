@@ -6,12 +6,13 @@ void yyerror(char *);
 %}
 %%
 [0-9]+ { yylval=atoi(yytext); return INT; }
-"("		{return LPR;}
-")"		{return RPR;}
-"+"		{return ADD;}
-"-"		{return SUB;}
-"/"		{return DIV;}
-"*"		{return MUL;}
+"("    {return LPR;}
+")"    {return RPR;}
+"+"	   {return ADD;}
+"-"	   {return SUB;}
+"/"	   {return DIV;}
+"*"	   {return MUL;}
+\n     { return EOL;}
 [ \t] ; /* skip whitespace */
 . yyerror("invalid character");
 %%

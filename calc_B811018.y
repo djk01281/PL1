@@ -10,9 +10,10 @@ void yyerror(char *);
 %token DIV
 %token LPR
 %token RPR
+%token EOL
 %%
 program:
-program addexpr '\n' {printf("%d\n", $2);}
+program addexpr EOL {printf("%d\n", $2);}
 |
 ;
 addexpr:
