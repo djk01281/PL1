@@ -37,7 +37,7 @@ void yyerror(char *s) {
 fprintf(stderr, "%s\n", s);
 }
 int main(int argc, char *argv){
-printf("type in 'exit' to exit");
+printf("type in 'exit' to exit\n");
 
 yyparse();
 return 0;
