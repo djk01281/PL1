@@ -26,7 +26,7 @@ addexpr MUL term {$$=$1*$3;}
 | term {$$=$1;}
 ;
 term:
-INTEGER {$$=$1;}
+INT {$$=$1;}
 | LPR addexpr RPR {$$=$2;}
 | INT {$$=$1;}
 ;
