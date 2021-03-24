@@ -17,21 +17,24 @@ program expr EOL {printf("%d\n", $2);}
 |
 ;
 expr:
-smexpr {$$=$1;}
-| expr MUL smexpr {
-    $$=$1*$3; 
-    }
-| expr DIV smexpr {
-    $$=$1/$3; 
-    }
-| expr ADD smexpr {
+expr ADD smexpr {
     $$=$1+$3; 
     }
 | expr SUB smexpr {
     $$=$1-$3; 
     }
+| smexpr {$$=$1;}
 ;
 smexpr:
+smexpr MUL term {
+    $$=$1*$3; 
+    }
+| smexpr DIV term {
+    $$=$1/$3; 
+    }
+| term {$$=$1;}
+;
+term:
 LPR expr RPR {$$=$2;}
 | INT {$$=$1;}
 ;
