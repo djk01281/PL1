@@ -13,22 +13,22 @@ void yyerror(char *);
 %token EOL
 %%
 program:
-program expr EOL {printf("%d\n", $1);}
+program expr EOL {printf("%d\n", $2);}
 |
 ;
 expr:
 smexpr {$$=$1;}
-| expr ADD smexpr {
-    $$=$1+$3; 
-    }
-| expr SUB smexpr {
-    $$=$1-$3; 
-    }
 | expr MUL smexpr {
     $$=$1*$3; 
     }
 | expr DIV smexpr {
     $$=$1/$3; 
+    }
+| expr ADD smexpr {
+    $$=$1+$3; 
+    }
+| expr SUB smexpr {
+    $$=$1-$3; 
     }
 ;
 smexpr:
