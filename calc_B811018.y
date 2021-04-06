@@ -41,7 +41,7 @@ smexpr MUL term {
 term:
 LPR expr RPR {
 	$$=$2;
-        printf("(%d)\n", $2);}
+    printf("(%d)\n", $2);}
 | INT {$$=$1;}
 | SUB INT {$$=-$2;}
 %%
