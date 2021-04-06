@@ -5,27 +5,30 @@ Grammar
     1 program: program expr EOL
     2        | %empty
 
-    3 expr: smexpr
-    4     | expr ADD smexpr
-    5     | expr SUB smexpr
-    6     | expr MUL smexpr
-    7     | expr DIV smexpr
+    3 expr: expr ADD smexpr
+    4     | expr SUB smexpr
+    5     | smexpr
 
-    8 smexpr: LPR expr RPR
-    9       | INT
+    6 smexpr: smexpr MUL term
+    7       | smexpr DIV term
+    8       | term
+
+    9 term: LPR expr RPR
+   10     | INT
+   11     | SUB INT
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-INT (258) 9
-ADD (259) 4
-SUB (260) 5
+INT (258) 10 11
+ADD (259) 3
+SUB (260) 4 11
 MUL (261) 6
 DIV (262) 7
-LPR (263) 8
-RPR (264) 8
+LPR (263) 9
+RPR (264) 9
 EOL (265) 1
 
 
@@ -36,9 +39,11 @@ $accept (11)
 program (12)
     on left: 1 2, on right: 0 1
 expr (13)
-    on left: 3 4 5 6 7, on right: 1 4 5 6 7 8
+    on left: 3 4 5, on right: 1 3 4 9
 smexpr (14)
-    on left: 8 9, on right: 3 4 5 6 7
+    on left: 6 7 8, on right: 3 4 5 6 7
+term (15)
+    on left: 9 10 11, on right: 6 7 8
 
 
 State 0
@@ -57,10 +62,12 @@ State 1
 
     $end  shift, and go to state 2
     INT   shift, and go to state 3
-    LPR   shift, and go to state 4
+    SUB   shift, and go to state 4
+    LPR   shift, and go to state 5
 
-    expr    go to state 5
-    smexpr  go to state 6
+    expr    go to state 6
+    smexpr  go to state 7
+    term    go to state 8
 
 
 State 2
@@ -72,136 +79,172 @@ State 2
 
 State 3
 
-    9 smexpr: INT .
+   10 term: INT .
 
-    $default  reduce using rule 9 (smexpr)
+    $default  reduce using rule 10 (term)
 
 
 State 4
 
-    8 smexpr: LPR . expr RPR
+   11 term: SUB . INT
 
-    INT  shift, and go to state 3
-    LPR  shift, and go to state 4
-
-    expr    go to state 7
-    smexpr  go to state 6
+    INT  shift, and go to state 9
 
 
 State 5
 
-    1 program: program expr . EOL
-    4 expr: expr . ADD smexpr
-    5     | expr . SUB smexpr
-    6     | expr . MUL smexpr
-    7     | expr . DIV smexpr
+    9 term: LPR . expr RPR
 
-    ADD  shift, and go to state 8
-    SUB  shift, and go to state 9
-    MUL  shift, and go to state 10
-    DIV  shift, and go to state 11
-    EOL  shift, and go to state 12
+    INT  shift, and go to state 3
+    SUB  shift, and go to state 4
+    LPR  shift, and go to state 5
+
+    expr    go to state 10
+    smexpr  go to state 7
+    term    go to state 8
 
 
 State 6
 
-    3 expr: smexpr .
+    1 program: program expr . EOL
+    3 expr: expr . ADD smexpr
+    4     | expr . SUB smexpr
 
-    $default  reduce using rule 3 (expr)
+    ADD  shift, and go to state 11
+    SUB  shift, and go to state 12
+    EOL  shift, and go to state 13
 
 
 State 7
 
-    4 expr: expr . ADD smexpr
-    5     | expr . SUB smexpr
-    6     | expr . MUL smexpr
-    7     | expr . DIV smexpr
-    8 smexpr: LPR expr . RPR
+    5 expr: smexpr .
+    6 smexpr: smexpr . MUL term
+    7       | smexpr . DIV term
 
-    ADD  shift, and go to state 8
-    SUB  shift, and go to state 9
-    MUL  shift, and go to state 10
-    DIV  shift, and go to state 11
-    RPR  shift, and go to state 13
+    MUL  shift, and go to state 14
+    DIV  shift, and go to state 15
+
+    $default  reduce using rule 5 (expr)
 
 
 State 8
 
-    4 expr: expr ADD . smexpr
+    8 smexpr: term .
 
-    INT  shift, and go to state 3
-    LPR  shift, and go to state 4
-
-    smexpr  go to state 14
+    $default  reduce using rule 8 (smexpr)
 
 
 State 9
 
-    5 expr: expr SUB . smexpr
+   11 term: SUB INT .
 
-    INT  shift, and go to state 3
-    LPR  shift, and go to state 4
-
-    smexpr  go to state 15
+    $default  reduce using rule 11 (term)
 
 
 State 10
 
-    6 expr: expr MUL . smexpr
+    3 expr: expr . ADD smexpr
+    4     | expr . SUB smexpr
+    9 term: LPR expr . RPR
 
-    INT  shift, and go to state 3
-    LPR  shift, and go to state 4
-
-    smexpr  go to state 16
+    ADD  shift, and go to state 11
+    SUB  shift, and go to state 12
+    RPR  shift, and go to state 16
 
 
 State 11
 
-    7 expr: expr DIV . smexpr
+    3 expr: expr ADD . smexpr
 
     INT  shift, and go to state 3
-    LPR  shift, and go to state 4
+    SUB  shift, and go to state 4
+    LPR  shift, and go to state 5
 
     smexpr  go to state 17
+    term    go to state 8
 
 
 State 12
+
+    4 expr: expr SUB . smexpr
+
+    INT  shift, and go to state 3
+    SUB  shift, and go to state 4
+    LPR  shift, and go to state 5
+
+    smexpr  go to state 18
+    term    go to state 8
+
+
+State 13
 
     1 program: program expr EOL .
 
     $default  reduce using rule 1 (program)
 
 
-State 13
-
-    8 smexpr: LPR expr RPR .
-
-    $default  reduce using rule 8 (smexpr)
-
-
 State 14
 
-    4 expr: expr ADD smexpr .
+    6 smexpr: smexpr MUL . term
 
-    $default  reduce using rule 4 (expr)
+    INT  shift, and go to state 3
+    SUB  shift, and go to state 4
+    LPR  shift, and go to state 5
+
+    term  go to state 19
 
 
 State 15
 
-    5 expr: expr SUB smexpr .
+    7 smexpr: smexpr DIV . term
 
-    $default  reduce using rule 5 (expr)
+    INT  shift, and go to state 3
+    SUB  shift, and go to state 4
+    LPR  shift, and go to state 5
+
+    term  go to state 20
 
 
 State 16
 
-    6 expr: expr MUL smexpr .
+    9 term: LPR expr RPR .
 
-    $default  reduce using rule 6 (expr)
+    $default  reduce using rule 9 (term)
 
 
 State 17
 
-    7 expr: expr DIV smexpr .
+    3 expr: expr ADD smexpr .
+    6 smexpr: smexpr . MUL term
+    7       | smexpr . DIV term
 
-    $default  reduce using rule 7 (expr)
+    MUL  shift, and go to state 14
+    DIV  shift, and go to state 15
+
+    $default  reduce using rule 3 (expr)
+
+
+State 18
+
+    4 expr: expr SUB smexpr .
+    6 smexpr: smexpr . MUL term
+    7       | smexpr . DIV term
+
+    MUL  shift, and go to state 14
+    DIV  shift, and go to state 15
+
+    $default  reduce using rule 4 (expr)
+
+
+State 19
+
+    6 smexpr: smexpr MUL term .
+
+    $default  reduce using rule 6 (smexpr)
+
+
+State 20
+
+    7 smexpr: smexpr DIV term .
+
+    $default  reduce using rule 7 (smexpr)

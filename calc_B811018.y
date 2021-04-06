@@ -33,18 +33,18 @@ smexpr MUL term {
     printf("%d * %d = %d\n", $1, $3, $1 * $3);
     }
 | smexpr DIV term {
-    $$=$1/$3; 
-    printf("%d / %d = %d\n", $1, $3, $1 / $3);
+        $$=$1/$3; 
+        printf("%d / %d = %d\n", $1, $3, $1 / $3);
     }
 | term {$$=$1;}
 ;
 term:
 LPR expr RPR {$$=$2;}
 | INT {$$=$1;}
-;
+| SUB INT {$$=-$2;}
 %%
 void yyerror(char *s) {
-printf(stderr, "%s\n", s);
+fprintf(stderr, "%s\n", s);
 }
 int main(int argc, char *argv){
 
