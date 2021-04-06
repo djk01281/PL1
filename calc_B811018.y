@@ -39,8 +39,9 @@ smexpr MUL term {
 | term {$$=$1;}
 ;
 term:
-LPR expr RPR {$$=$2;
-        prinf)("(%d)\n", $2)}
+LPR expr RPR {
+	$$=$2;
+        printf("(%d)\n", $2);}
 | INT {$$=$1;}
 | SUB INT {$$=-$2;}
 %%

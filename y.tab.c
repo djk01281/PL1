@@ -438,7 +438,7 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    16,    16,    17,    20,    24,    28,    31,    35,    39,
-      42,    43,    44
+      42,    45,    46
 };
 #endif
 
@@ -1272,24 +1272,26 @@ yyreduce:
 
   case 10:
 #line 42 "calc_B811018.y" /* yacc.c:1646  */
-    {(yyval)=(yyvsp[-1]);}
-#line 1277 "y.tab.c" /* yacc.c:1646  */
+    {
+	(yyval)=(yyvsp[-1]);
+        printf("(%d)\n", (yyvsp[-1]));}
+#line 1279 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 43 "calc_B811018.y" /* yacc.c:1646  */
+#line 45 "calc_B811018.y" /* yacc.c:1646  */
     {(yyval)=(yyvsp[0]);}
-#line 1283 "y.tab.c" /* yacc.c:1646  */
+#line 1285 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 44 "calc_B811018.y" /* yacc.c:1646  */
+#line 46 "calc_B811018.y" /* yacc.c:1646  */
     {(yyval)=-(yyvsp[0]);}
-#line 1289 "y.tab.c" /* yacc.c:1646  */
+#line 1291 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1293 "y.tab.c" /* yacc.c:1646  */
+#line 1295 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1517,7 +1519,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 45 "calc_B811018.y" /* yacc.c:1906  */
+#line 47 "calc_B811018.y" /* yacc.c:1906  */
 
 void yyerror(char *s) {
 fprintf(stderr, "%s\n", s);
